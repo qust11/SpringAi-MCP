@@ -8,12 +8,15 @@ import com.ym.enums.SseMsgEnum;
 import com.ym.service.IChatService;
 import com.ym.util.SseServer;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.document.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +51,6 @@ public class ChatServiceImpl implements IChatService {
         Flux<String> content = chatClient.prompt(chatEntity.getMessage()).stream().content();
         List<String> list = content.toStream().map(msg -> {
             SseServer.sendMsg(chatEntity.getCurrentUserName(), msg, SseMsgEnum.ADD);
-            log.info("sse发送消息：{}", msg);
             return msg;
         }).toList();
         String contentStr = list.stream().collect(Collectors.joining());
@@ -56,5 +58,32 @@ public class ChatServiceImpl implements IChatService {
         // 添加完成消息
         SseServer.sendMsg(chatEntity.getCurrentUserName(), JSONUtil.toJsonStr(chatFinishEntity), SseMsgEnum.FINISH);
         return content;
+    }
+
+    private final String PORCON = """
+            基于上下文的知识库来回答问题：
+            【上下文】
+            {content}
+            
+            【问题】
+            [question]
+            
+            【输出】
+            如果没询到回复：不知道。
+            如果查到请回复具体的内容。不相关的近似内容不必提到。
+            """;
+
+    @Override
+    public Flux<String> doChatRagSearch(ChatEntity chatEntity, List<Document> documentList) {
+        String question = chatEntity.getMessage();
+        if (StringUtils.isBlank(question)){
+            return null;
+        }
+
+        String content = documentList.stream().map(Document::getText).collect(Collectors.joining("\n"));
+        String prompt = PORCON.replace("{content}", content).replace("[question]", question);
+        chatEntity.setMessage( prompt);
+        Flux<String> stringFlux = doChat(chatEntity);
+        return stringFlux;
     }
 }

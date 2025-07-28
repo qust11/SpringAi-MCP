@@ -3,7 +3,10 @@ package com.ym.service;
 
 import com.ym.bean.ChatEntity;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.document.Document;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 /**
  * @author qushutao
@@ -32,4 +35,6 @@ public interface IChatService {
      * @return 返回数据
      */
     Flux<String> doChat(ChatEntity chatEntity);
+
+    Flux<String> doChatRagSearch(ChatEntity chatEntity, List<Document> documentList);
 }
