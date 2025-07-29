@@ -37,4 +37,6 @@ public interface IChatService {
     Flux<String> doChat(ChatEntity chatEntity);
 
     Flux<String> doChatRagSearch(ChatEntity chatEntity, List<Document> documentList);
+
+    Flux<String> doInternetSearch(ChatEntity chatEntity);
 }

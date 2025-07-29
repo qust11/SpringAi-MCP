@@ -1,6 +1,10 @@
 package com.ym.config;
 
 import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.model.ApiKey;
+import org.springframework.ai.model.SimpleApiKey;
+import org.springframework.ai.openai.OpenAiEmbeddingModel;
+import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.vectorstore.redis.RedisVectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,4 +28,5 @@ public class RedisVectorStoreConfig {
                 .initializeSchema(true) // 可根据需要调整
                 .build();
     }
+
 } 
