@@ -1,0 +1,30 @@
+server:
+  port: 9060
+spring:
+  application:
+    name: spring-ai-mcp-server
+  ai:
+    mcp:
+      server:
+        name: spring-ai-mcp-server-sse
+        type: async
+        version: 1.0.0
+        sse-endpoint: /sse
+  mail:
+    host: smtp.163.com      # SMTP服务器地址
+    port: 465                    # 端口 (TLS常用587, SSL用465)
+    username: m18310052361@163.com
+    password: PLbLCi2CkQYQcynT   # 或授权码
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            ssl:
+              enable: true
+logging:
+  level:
+    root: info
