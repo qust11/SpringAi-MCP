@@ -2,6 +2,7 @@ package com.ym.controller;
 
 
 import com.ym.service.IChatService;
+import com.ym.service.IMcpService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -21,6 +22,8 @@ import reactor.core.publisher.Flux;
 public class HelloWordController {
 
     private final IChatService chatService;
+    private final IMcpService mcpService;
+
     @GetMapping( "/test")
     public String hello(@RequestParam String msg){
         return "hello world " + msg;
@@ -42,5 +45,9 @@ public class HelloWordController {
     public Flux<String> streamChatStr(@RequestParam String msg, HttpServletResponse response){
         response.setCharacterEncoding("UTF-8");
         return chatService.streamChatStr( msg);
+    }
+    @GetMapping( "/mcp/test")
+    public void test(){
+        mcpService.test();
     }
 }

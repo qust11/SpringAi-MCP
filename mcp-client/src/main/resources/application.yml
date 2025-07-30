@@ -12,6 +12,19 @@ spring:
       chat:
         options:
           model: ${OPENAI_MODEL}
+    mcp:
+      client:
+        sse:
+          connections:
+            server1:
+              url: https://mcp.amap.com
+              sse-endpoint: /sse?key=089879e601328583bb95e335f746fe8b
+            server2:
+              url: http://localhost:9060
+              sse-endpoint: /sse
+        stdio:
+          servers-configuration: classpath:mcp-server.json
+
     vectorstore:
       redis:
         enabled: true
