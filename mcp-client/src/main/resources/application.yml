@@ -24,13 +24,14 @@ spring:
               sse-endpoint: /sse
         stdio:
           servers-configuration: classpath:mcp-server.json
-
+  datasource:
     vectorstore:
       redis:
         enabled: true
         initialize-schema: true  #是否初始化所需模式
         index-name: lee-vectorstore #用于存储向量的名称
         prefix: 'embedding:'  # redis键的前缀
+
   data:
     redis:
       host: 127.0.0.1
@@ -38,10 +39,12 @@ spring:
       timeout: 5000
       connect-timeout: 2000
       database: 0
+
 logging:
   level:
     ai:
       djl: debug
+
 internet:
   websearch:
     searxng:

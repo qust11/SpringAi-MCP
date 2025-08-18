@@ -97,7 +97,6 @@
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-starter-mcp-client</artifactId>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>

@@ -20,8 +20,8 @@ import java.time.format.DateTimeFormatter;
 public class DateTool {
 
 
-    @Tool(name = "获取指定城市当前时间", description = "获取指定城市当前时间")
-    private String getTime(String cityName, String zoneId) {
+    @Tool(name = "get time", description = "获取指定城市当前时间")
+    public String getTime(String cityName, String zoneId) {
         ZoneId zone = ZoneId.of(zoneId);
         LocalDateTime now = LocalDateTime.now(zone);
         log.info("【工具】获取城市【{}】当前时间， 【{}】", cityName, now);

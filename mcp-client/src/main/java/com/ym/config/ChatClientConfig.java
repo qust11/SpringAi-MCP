@@ -2,6 +2,8 @@ package com.ym.config;
 
 
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +16,12 @@ import org.springframework.context.annotation.Configuration;
 public class ChatClientConfig {
 
     @Bean
-    public ChatClient chatClient(ChatClient.Builder chatClientBuilder, ToolCallbackProvider toolCallbackProvider){
+    public ChatClient chatClient(ChatClient.Builder chatClientBuilder,
+                                 ToolCallbackProvider toolCallbackProvider,
+                                 ChatMemory chatMemory){
         return chatClientBuilder
                 .defaultToolCallbacks(toolCallbackProvider)
+                .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
                 .defaultSystem("你是一个非常棒的人工智能助手，可以帮我解决很多问题，你的名字叫做'Lagogo'")
 
                 .build();

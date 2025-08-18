@@ -24,30 +24,32 @@ public class HelloWordController {
     private final IChatService chatService;
     private final IMcpService mcpService;
 
-    @GetMapping( "/test")
-    public String hello(@RequestParam String msg){
+    @GetMapping("/test")
+    public String hello(@RequestParam String msg) {
         return "hello world " + msg;
     }
-    @GetMapping( "")
-    public String chat(@RequestParam String msg){
-        return chatService.chat( msg);
+
+    @GetMapping("")
+    public String chat(@RequestParam String msg) {
+        return chatService.chat(msg);
     }
 
-    @GetMapping( "/stream")
-    public Flux<ChatResponse> streamChat(@RequestParam String msg, HttpServletResponse response){
+    @GetMapping("/stream")
+    public Flux<ChatResponse> streamChat(@RequestParam String msg, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
-        return chatService.streamChat( msg);
+        return chatService.streamChat(msg);
     }
 
 
-
-    @GetMapping( "/stream/str")
-    public Flux<String> streamChatStr(@RequestParam String msg, HttpServletResponse response){
+    @GetMapping("/stream/str")
+    public Flux<String> streamChatStr(@RequestParam String msg, HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
-        return chatService.streamChatStr( msg);
+        return chatService.streamChatStr(msg);
     }
-    @GetMapping( "/mcp/test")
-    public void test(){
+
+    @GetMapping("/mcp/test")
+    public void test() {
         mcpService.test();
     }
+
 }
